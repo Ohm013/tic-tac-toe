@@ -4,23 +4,12 @@ function gameBoard () {
    
 }
 
-for (let i = 0 ; i < boardSpace.length; i++){
-  
-      boardSpace[i].addEventListener("click", markBoard)
-}    
-    
-function markBoard (e){
-      let boardValue = e.target.getAttribute("data-value") //gets the value of each board spot
-        console.log(boardValue);
-
-        //add more functions here
-      
-    };
+ 
 
 
-function gameFlow () {
-   
-   
+
+const gameFlow = (() => {
+
     let player = [{
         name:"Player 1", //player[0]
         icon : "X" 
@@ -30,30 +19,50 @@ function gameFlow () {
         icon : "O" 
     }]
 
+    let playerTurn = player[0] ;
 
+    for (let i = 0 ; i < boardSpace.length; i++){
   
-        
-  
+        boardSpace[i].addEventListener("click", (e) => {
+            let boardValue = e.target.getAttribute("data-value") //gets the value of each board spot
+            console.log(boardValue);
+            switchPlayers(e);
             
+        })
+  }    
+     
+   
+//have to find a way for it remember the last players turn so it can switch to the other player
 
-   // let playerTurn = player[0] ;
+function switchPlayers (e) {
     
+
+    if ( playerTurn = player[0]) {
+        console.log(playerTurn);
+        e.target.textContent = player[0].icon;
+       playerTurn = player[1];
+        
+    }else  { 
+        e.target.textContent = player[1].icon;
+        playerTurn = player[0];
+        console.log(playerTurn);
+    }
+}
+});
+
+gameFlow(); 
+
+
+
+
+    
+
     // function markBoard (){
     //    // if (playerTurn = player[0]){
     //         return e.target.textContent = "X"
            
     //     }
            
-       
-          
-
-        
-        
-                
-};
-
-
-gameFlow();
 
 
 
