@@ -1,11 +1,5 @@
 const boardSpace = document.querySelectorAll(".boardSpace");
-
-function gameBoard () {
-   
-}
-
- 
-
+const comment = document.querySelector("h2");
 
 
 const gameFlow = (() => {
@@ -19,56 +13,61 @@ const gameFlow = (() => {
         icon : "O" 
     }]
 
-    let playerTurn = player[0] ;
+   
 
     for (let i = 0 ; i < boardSpace.length; i++){
   
-        boardSpace[i].addEventListener("click", (e) => {
-            let boardValue = e.target.getAttribute("data-value") //gets the value of each board spot
+        boardSpace[i].addEventListener("click", (e)=>{
+            let boardValue = boardSpace[i].getAttribute("data-value") //gets the value of each board spot
             console.log(boardValue);
             switchPlayers(e);
-            
+            checkWin(boardValue,boardSpace[i]);
         })
-  }    
-     
-   
-//have to find a way for it remember the last players turn so it can switch to the other player
-
-function switchPlayers (e) {
-    
-
-    if ( playerTurn = player[0]) {
-        console.log(playerTurn);
-        e.target.textContent = player[0].icon;
-       playerTurn = player[1];
+    }    
         
-    }else  { 
-        e.target.textContent = player[1].icon;
-        playerTurn = player[0];
-        console.log(playerTurn);
+    let playerTurn = player[0] ;
+    comment.textContent = "Player 1's turn";
+
+    function switchPlayers (e) {
+        
+      
+
+        if ( playerTurn == player[0]) {
+            comment.textContent = `Player 2's turn`;
+            console.log(playerTurn);
+            e.target.textContent = player[0].icon;
+        playerTurn = player[1];
+        }else if (playerTurn == player[1])  { 
+            comment.textContent = "Player 1's turn"
+            e.target.textContent = player[1].icon;
+            console.log(playerTurn);
+            playerTurn = player[0];
+        
+        }
     }
-}
 });
 
 gameFlow(); 
 
 
-
-
-    
-
-    // function markBoard (){
-    //    // if (playerTurn = player[0]){
-    //         return e.target.textContent = "X"
-           
-    //     }
+const checkWin = ((boardValue,boardSqaure) => {
+    console.log(boardValue);
+    console.log(boardSqaure);
+    if ((boardValue == 1 &&  boardValue == 2 && boardValue == 3) && (boardSquare.textContent = "X")){
+   
+        comment.textContent = "You win!"
+     }
+     }
+)
            
 
 
 
 //Issue #1: boardSpace.addEventListener was giving error saying not a function
-//Solution #2: boardSpace is referring to an ARRAY of elements while we want to add an event listener to each individal one so had to make a loop that adds event listener to each boardSpace div
+//Solution #1: boardSpace is referring to an ARRAY of elements while we want to add an event listener to each individal one so had to make a loop that adds event listener to each boardSpace div
 
+//Issue #2 : Couldnt figure out how to alternate players with if statement
+//Solution #2 : for the if statement i was writing if (playerTurn = player[0]) but was not putting == was just putting one =
      //const player1Spot =
             // rowSpot = prompt(`Player 1's turn, enter Row of which space you want marker on`);
             // rowItem = prompt("Player 1's turn, enter ITEM NUMBER of the row you want marker on")
