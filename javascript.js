@@ -21,12 +21,13 @@ const gameFlow = (() => {
             let boardValue = boardSpace[i].getAttribute("data-value") //gets the value of each board spot
             console.log(boardValue);
             switchPlayers(e);
-            checkWin(boardValue,boardSpace[i]);
+            checkWin();
+           // checkWin(boardValue,e.target);
         })
     }    
         
     let playerTurn = player[0] ;
-    comment.textContent = "Player 1's turn";
+    comment.textContent = "Player 1's turn"; //starts game off with this then will change after player goes
 
     function switchPlayers (e) {
         
@@ -34,13 +35,12 @@ const gameFlow = (() => {
 
         if ( playerTurn == player[0]) {
             comment.textContent = `Player 2's turn`;
-            console.log(playerTurn);
             e.target.textContent = player[0].icon;
         playerTurn = player[1];
         }else if (playerTurn == player[1])  { 
             comment.textContent = "Player 1's turn"
             e.target.textContent = player[1].icon;
-            console.log(playerTurn);
+          //  console.log(playerTurn);
             playerTurn = player[0];
         
         }
@@ -50,16 +50,30 @@ const gameFlow = (() => {
 gameFlow(); 
 
 
-const checkWin = ((boardValue,boardSqaure) => {
-    console.log(boardValue);
-    console.log(boardSqaure);
-    if ((boardValue == 1 &&  boardValue == 2 && boardValue == 3) && (boardSquare.textContent = "X")){
-   
-        comment.textContent = "You win!"
-     }
-     }
-)
-           
+const checkWin = (() => {
+//console.log(boardSpace[0].textContent);
+
+    function boardPosition (pos){
+        return boardSpace[pos].textContent;
+    }
+
+    if ((boardPosition(0) == "X" && boardPosition(1) == "X" && boardPosition(2) == "X") || // top row check  
+    (boardPosition(3) == "X" && boardPosition(4) == "X" && boardPosition(5) == "X") || //middle row
+    (boardPosition(6) == "X" && boardPosition(7) == "X" && boardPosition(8) == "X") ||  //bottom row
+    (boardPosition(0) == "X" && boardPosition(4) == "X" && boardPosition(8) == "X") ||//left to right diagonal
+    (boardPosition(2) == "X" && boardPosition(4) == "X" && boardPosition(6) == "X")){ // right to left diagonal
+        
+        comment.textContent = "You win player 1!"
+
+    } else if ((boardPosition(0) == "O" && boardPosition(1) == "O" && boardPosition(2) == "O") || // top row check  
+    (boardPosition(3) == "O" && boardPosition(4) == "O" && boardPosition(5) == "O") || //middle row
+    (boardPosition(6) == "O" && boardPosition(7) == "O" && boardPosition(8) == "O") ||  //bottom row
+    (boardPosition(0) == "O" && boardPosition(4) == "O" && boardPosition(8) == ")") ||//left to right diagonal
+    (boardPosition(2) == "O" && boardPosition(4) == "O" && boardPosition(6) == "O")) { //right to left diagonal
+        
+        comment.textContent = "You win player 2!"
+    }
+})        
 
 
 
