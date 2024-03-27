@@ -18,11 +18,8 @@ const gameFlow = (() => {
     for (let i = 0 ; i < boardSpace.length; i++){
   
         boardSpace[i].addEventListener("click", (e)=>{
-            let boardValue = boardSpace[i].getAttribute("data-value") //gets the value of each board spot
-            console.log(boardValue);
             switchPlayers(e);
             checkWin();
-           // checkWin(boardValue,e.target);
         })
     }    
         
@@ -31,8 +28,6 @@ const gameFlow = (() => {
 
     function switchPlayers (e) {
         
-      
-
         if ( playerTurn == player[0]) {
             comment.textContent = `Player 2's turn`;
             e.target.textContent = player[0].icon;
@@ -40,7 +35,6 @@ const gameFlow = (() => {
         }else if (playerTurn == player[1])  { 
             comment.textContent = "Player 1's turn"
             e.target.textContent = player[1].icon;
-          //  console.log(playerTurn);
             playerTurn = player[0];
         
         }
@@ -61,7 +55,10 @@ const checkWin = (() => {
     (boardPosition(3) == "X" && boardPosition(4) == "X" && boardPosition(5) == "X") || //middle row
     (boardPosition(6) == "X" && boardPosition(7) == "X" && boardPosition(8) == "X") ||  //bottom row
     (boardPosition(0) == "X" && boardPosition(4) == "X" && boardPosition(8) == "X") ||//left to right diagonal
-    (boardPosition(2) == "X" && boardPosition(4) == "X" && boardPosition(6) == "X")){ // right to left diagonal
+    (boardPosition(2) == "X" && boardPosition(4) == "X" && boardPosition(6) == "X")|| //right to left diagonal
+    (boardPosition(0) == "X" && boardPosition(3) == "X" && boardPosition(6) == "X")|| //first column
+    (boardPosition(1) == "X" && boardPosition(4) == "X" && boardPosition(7) == "X")|| //second columnn
+    (boardPosition(2) == "X" && boardPosition(5) == "X" && boardPosition(8) == "X")) { // third column column
         
         comment.textContent = "You win player 1!"
 
@@ -69,9 +66,13 @@ const checkWin = (() => {
     (boardPosition(3) == "O" && boardPosition(4) == "O" && boardPosition(5) == "O") || //middle row
     (boardPosition(6) == "O" && boardPosition(7) == "O" && boardPosition(8) == "O") ||  //bottom row
     (boardPosition(0) == "O" && boardPosition(4) == "O" && boardPosition(8) == ")") ||//left to right diagonal
-    (boardPosition(2) == "O" && boardPosition(4) == "O" && boardPosition(6) == "O")) { //right to left diagonal
+    (boardPosition(2) == "O" && boardPosition(4) == "O" && boardPosition(6) == "O") || //right to left diagonal
+    (boardPosition(0) == "X" && boardPosition(3) == "X" && boardPosition(6) == "X")|| //first column
+    (boardPosition(1) == "X" && boardPosition(4) == "X" && boardPosition(7) == "X")|| //second columnn
+    (boardPosition(2) == "X" && boardPosition(5) == "X" && boardPosition(8) == "X")) { //third column
         
         comment.textContent = "You win player 2!"
+        //need to make something to disbale clicking after player wins
     }
 })        
 
@@ -82,7 +83,13 @@ const checkWin = (() => {
 
 //Issue #2 : Couldnt figure out how to alternate players with if statement
 //Solution #2 : for the if statement i was writing if (playerTurn = player[0]) but was not putting == was just putting one =
-     //const player1Spot =
+    
+//Issue #3 : Couldnt figure out a way to target the board spaces to check for winner. Tried getting boardValue using querySelect data-value 
+//it wouldnt know the rest of the row having all "X" or "O", just the most recently clicked one
+//Solution #3: Targeted boardSpace[number].textContent and made if statement checking the rows. Made boardPosition function to shorten writing
+
+
+//const player1Spot =
             // rowSpot = prompt(`Player 1's turn, enter Row of which space you want marker on`);
             // rowItem = prompt("Player 1's turn, enter ITEM NUMBER of the row you want marker on")
             //need to tell it to print player1's "X" on player1Spot
