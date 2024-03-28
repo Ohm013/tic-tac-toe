@@ -1,8 +1,10 @@
 const boardSpace = document.querySelectorAll(".boardSpace");
 const comment = document.querySelector("h2");
+const reset = document.querySelector(".reset")
+const start = document.querySelector(".start");
 
 
-const gameFlow = (() => {
+function gameFlow () {
 
     let player = [{
         name:"Player 1", //player[0]
@@ -13,15 +15,17 @@ const gameFlow = (() => {
         icon : "O" 
     }]
 
-   
+        for (let i = 0 ; i < boardSpace.length; i++){
 
-    for (let i = 0 ; i < boardSpace.length; i++){
-  
-        boardSpace[i].addEventListener("click", (e)=>{
-            switchPlayers(e);
-            checkWin();
-        })
-    }    
+            boardSpace[i].addEventListener("click", (e)=>{
+            if (boardSpace[i].textContent != ""){ //prevents you players from clicking same square twice
+                return;
+            } 
+            switchPlayers(e); 
+            checkWin();   
+                
+            })
+        }    
         
     let playerTurn = player[0] ;
     comment.textContent = "Player 1's turn"; //starts game off with this then will change after player goes
@@ -39,14 +43,16 @@ const gameFlow = (() => {
         
         }
     }
-});
+};
 
 gameFlow(); 
 
 
 const checkWin = (() => {
 //console.log(boardSpace[0].textContent);
+    
 
+   
     function boardPosition (pos){
         return boardSpace[pos].textContent;
     }
@@ -60,21 +66,41 @@ const checkWin = (() => {
     (boardPosition(1) == "X" && boardPosition(4) == "X" && boardPosition(7) == "X")|| //second columnn
     (boardPosition(2) == "X" && boardPosition(5) == "X" && boardPosition(8) == "X")) { // third column column
         
-        comment.textContent = "You win player 1!"
+        comment.textContent = "You win player 1!";
+        turnOff();
 
     } else if ((boardPosition(0) == "O" && boardPosition(1) == "O" && boardPosition(2) == "O") || // top row check  
     (boardPosition(3) == "O" && boardPosition(4) == "O" && boardPosition(5) == "O") || //middle row
     (boardPosition(6) == "O" && boardPosition(7) == "O" && boardPosition(8) == "O") ||  //bottom row
-    (boardPosition(0) == "O" && boardPosition(4) == "O" && boardPosition(8) == ")") ||//left to right diagonal
+    (boardPosition(0) == "O" && boardPosition(4) == "O" && boardPosition(8) == "O") ||//left to right diagonal
     (boardPosition(2) == "O" && boardPosition(4) == "O" && boardPosition(6) == "O") || //right to left diagonal
-    (boardPosition(0) == "X" && boardPosition(3) == "X" && boardPosition(6) == "X")|| //first column
-    (boardPosition(1) == "X" && boardPosition(4) == "X" && boardPosition(7) == "X")|| //second columnn
-    (boardPosition(2) == "X" && boardPosition(5) == "X" && boardPosition(8) == "X")) { //third column
+    (boardPosition(0) == "O" && boardPosition(3) == "O" && boardPosition(6) == "O")|| //first column
+    (boardPosition(1) == "O" && boardPosition(4) == "O" && boardPosition(7) == "O")|| //second columnn
+    (boardPosition(2) == "O" && boardPosition(5) == "O" && boardPosition(8) == "O")) { //third column
         
-        comment.textContent = "You win player 2!"
-        //need to make something to disbale clicking after player wins
+        comment.textContent = "You win player 2!";
+        turnOff();
+        
+         //trying to create a condition for a draw
     }
-})        
+
+    function turnOff () {
+        boardSpace.forEach((square) => {
+            square.style.pointerEvents = "none";   //disables from players clicking any other boxes after winning
+
+        })
+    }
+ 
+})    
+
+reset.addEventListener("click", () => {  //how to add multiple conditions for a forEach loop
+    boardSpace.forEach(function(square) {
+    square.textContent = "" ;
+    square.style.pointerEvents = "auto " ;   //enables click event again and resets the gameBoard
+    checkWin();
+    comment.textContent = "Player 1's turn";
+})}
+)
 
 
 
