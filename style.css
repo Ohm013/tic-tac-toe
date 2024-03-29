@@ -17,12 +17,17 @@ body {
     
 }
 
+h2 {
+    visibility: hidden;
+}
+
 .boardSpace {
     border: 1px solid black; 
     font-size: 80px; 
     display: flex;
     justify-content: center;
     align-items: center; 
+    visibility: hidden;
 }
 
 .boardSpace:hover {
