@@ -2,10 +2,10 @@ const boardSpace = document.querySelectorAll(".boardSpace");
 const comment = document.querySelector("h2");
 const reset = document.querySelector(".reset")
 const start = document.querySelector(".start");
-
+let count = 0;
 
 function gameFlow () {
-
+  
     let player = [{
         name:"Player 1", //player[0]
         icon : "X" 
@@ -22,11 +22,11 @@ function gameFlow () {
                 return;
             } 
             switchPlayers(e); 
-            checkWin();   
-                
+            count++;
+            checkWin(); 
             })
         }    
-        
+
     let playerTurn = player[0] ;
     comment.textContent = "Player 1's turn"; //starts game off with this then will change after player goes
 
@@ -66,7 +66,7 @@ const checkWin = (() => {
     (boardPosition(1) == "X" && boardPosition(4) == "X" && boardPosition(7) == "X")|| //second columnn
     (boardPosition(2) == "X" && boardPosition(5) == "X" && boardPosition(8) == "X")) { // third column column
         
-        comment.textContent = "You win player 1!";
+        comment.textContent = "You win player 1! Press Reset to play again!";
         turnOff();
 
     } else if ((boardPosition(0) == "O" && boardPosition(1) == "O" && boardPosition(2) == "O") || // top row check  
@@ -78,10 +78,14 @@ const checkWin = (() => {
     (boardPosition(1) == "O" && boardPosition(4) == "O" && boardPosition(7) == "O")|| //second columnn
     (boardPosition(2) == "O" && boardPosition(5) == "O" && boardPosition(8) == "O")) { //third column
         
-        comment.textContent = "You win player 2!";
+        comment.textContent = "You win player 2! Press Reset to play again!";
         turnOff();
         
-         //trying to create a condition for a draw
+    }else if (count == 9){ //it all the position spaces and will say draw if all are full but nobody won
+      comment.textContent = "It's a draw"
+        
+        
+        
     }
 
     function turnOff () {
@@ -93,16 +97,28 @@ const checkWin = (() => {
  
 })    
 
+
 reset.addEventListener("click", () => {  //how to add multiple conditions for a forEach loop
     boardSpace.forEach(function(square) {
-    square.textContent = "" ;
-    square.style.pointerEvents = "auto " ;   //enables click event again and resets the gameBoard
-    checkWin();
-    comment.textContent = "Player 1's turn";
-})}
-)
+        square.textContent = "" ;
+        square.style.pointerEvents = "auto " ;   //enables click event again and resets the gameBoard
+        count = 0
+        comment.textContent = "Player 1's turn";
+    })
+})
 
+start.addEventListener("click", ()=> {
+    boardSpace.forEach(function(square) {
+        if (square.style.visibility == "visible"){
+            square.style.visibility = "hidden"
+            comment.style.visibility = "hidden"
+        }else {
+            square.style.visibility = "visible"
+            comment.style.visibility = "visible"
 
+        }
+    })
+})
 
 //Issue #1: boardSpace.addEventListener was giving error saying not a function
 //Solution #1: boardSpace is referring to an ARRAY of elements while we want to add an event listener to each individal one so had to make a loop that adds event listener to each boardSpace div
