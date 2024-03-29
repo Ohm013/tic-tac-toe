@@ -12,8 +12,8 @@ body {
 .board {
     display: grid ;
     grid-template: repeat(3, .33fr)/ repeat(3, .33fr);
-    width: 550px;
-    height: 550px;  
+    width: 30vw;
+    height: 70vh;  
     
 }
 
